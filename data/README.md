@@ -2,18 +2,17 @@
 
 This repository ignores the files in `data/`
 
-Necessay files can be downloaded
-[here](http://people.eng.unimelb.edu.au/tbaldwin/resources/satire/) (this
-*automatically* starts to download `satire.tgz`)
+To download the necessary files, do the following from this directory:
 
-Instead, if you have the Make utility installed, run `make` from here
+```
+$ make
+```
 
-(You could also run the script using something like `sh get_data.sh` or
-`source get_data.sh`)
+(Alternatively, you could run the script using something like
+`sh get_data.sh` or `source get_data.sh`)
 
----
-
-The repository should be organized in the following way:
+The repository should be organized in the following way (and will be if data
+is accessed using the methods mentioned above):
 
 ```
 ├── data/
@@ -28,3 +27,8 @@ The repository should be organized in the following way:
 `test/` contains 1,595 files and `training/` contains 2,639 files
 
 Note: the number of labels in `training-class` is only 2,638
+
+As a last resort, the data can be downloaded
+[here](http://people.eng.unimelb.edu.au/tbaldwin/resources/satire/) (this
+*automatically* starts to download `satire.tgz`)
+
