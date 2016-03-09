@@ -1,7 +1,9 @@
 import os
 import re
 
+import numpy as np
 import pandas as pd
+from sklearn.feature_extraction.text import CountVectorizer
 
 
 def _to_df(d):
@@ -25,3 +27,9 @@ def data(X, y):
     df = pd.merge(X, y, on='file')
     df['label'] = df.label.apply(lambda x: 1 if x == 'satire' else 0)
     return df
+
+def vocabulary(a, b):
+    assert isinstance(a, np.ndarray) and isinstance(b, np.ndarray)
+    cv = CountVectorizer()
+    cv.fit_transform(np.append(a, b))
+    return list(cv.vocabulary_.keys())
