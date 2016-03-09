@@ -22,11 +22,16 @@ is accessed using the methods mentioned above):
 │   │   ├── training-*
 │   ├── test-class
 │   ├── training-class
+│   ├── profane.txt
 ```
 
 `test/` contains 1,595 files and `training/` contains 2,639 files
 
 Note: the number of labels in `training-class` is only 2,638
+
+`profane.txt` is a list of profane words gathered from the Comprehensive Perl
+Archive Network (more information can be found
+([here](http://search.cpan.org/~tbone/Regexp-Profanity-US-1.4/US.pm))
 
 As a last resort, the data can be downloaded
 [here](http://people.eng.unimelb.edu.au/tbaldwin/resources/satire/) (this
