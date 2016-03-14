@@ -33,3 +33,6 @@ def vocabulary(a, b):
     cv = CountVectorizer()
     cv.fit_transform(np.append(a, b))
     return list(cv.vocabulary_.keys())
+
+def slangwords(path):
+    return [s.rstrip() for s in open(path, 'r').readlines()]
