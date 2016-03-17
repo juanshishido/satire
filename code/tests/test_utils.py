@@ -36,3 +36,11 @@ class TestUtils(unittest.TestCase):
         X = features(self.path_test)
         y = labels('../data/test-class')
         self.assertEquals((self.n_test, 3), data(X, y).shape)
+
+    def test_remove_punctuation(self):
+        text0 = 'hello, world'
+        text1 = "this is where it's at!"
+        text2 = "~!@#$%a^&*()-_=+[]{}\|;:'<>/"
+        self.assertEquals('hello world', remove_punctuation(text0))
+        self.assertEquals('this is where its at', remove_punctuation(text1))
+        self.assertEquals('a', remove_punctuation(text2))

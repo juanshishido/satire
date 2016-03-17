@@ -1,5 +1,6 @@
 import os
 import re
+from string import punctuation
 
 import numpy as np
 import pandas as pd
@@ -37,3 +38,7 @@ def vocabulary(a, b):
 def word_lists(path):
     with open(path, 'r') as f:
         return [w.rstrip() for w in f.readlines()]
+
+def remove_punctuation(text):
+    p = re.escape(punctuation)
+    return re.sub(r'['+p+']+', '', text)
