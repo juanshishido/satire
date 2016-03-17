@@ -34,5 +34,6 @@ def vocabulary(a, b):
     cv.fit_transform(np.append(a, b))
     return list(cv.vocabulary_.keys())
 
-def slangwords(path):
-    return [s.rstrip() for s in open(path, 'r').readlines()]
+def word_lists(path):
+    with open(path, 'r') as f:
+        return [w.rstrip() for w in f.readlines()]
