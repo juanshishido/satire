@@ -42,3 +42,7 @@ def word_lists(path):
 def remove_punctuation(text):
     p = re.escape(punctuation)
     return re.sub(r'['+p+']+', '', text)
+
+def contains(words, text):
+    assert isinstance(words, (list, set)) and isinstance(text, str)
+    return any(w in remove_punctuation(text).split() for w in words)
