@@ -37,6 +37,15 @@ class TestUtils(unittest.TestCase):
         y = labels('../data/test-class')
         self.assertEquals((self.n_test, 3), data(X, y).shape)
 
+    def test_word_lists(self):
+        words = ['satire', 'detection', 'satire']
+        with open('test_list.txt', 'w') as f:
+            for word in words:
+                f.write(word+'\n')
+        self.assertEquals(['detection', 'satire'],
+                          sorted(word_lists('test_list.txt')))
+        os.remove('test_list.txt')
+
     def test_remove_punctuation(self):
         text0 = 'hello, world'
         text1 = "this is where it's at!"

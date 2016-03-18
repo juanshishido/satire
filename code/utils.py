@@ -37,7 +37,7 @@ def vocabulary(a, b):
 
 def word_lists(path):
     with open(path, 'r') as f:
-        return [w.rstrip() for w in f.readlines()]
+        return list(set([w.rstrip() for w in f.readlines()]))
 
 def remove_punctuation(text):
     p = re.escape(punctuation)
