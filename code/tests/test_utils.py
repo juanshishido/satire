@@ -46,6 +46,8 @@ class TestUtils(unittest.TestCase):
         self.assertEquals('a', remove_punctuation(text2))
 
     def test_contains(self):
-        text = "the use of humor, irony, exaggeration, or ridicule to expose and criticize people's stupidity or vices, particularly in the context of contemporary politics and other topical issues"
+        text = ("the use of humor, irony, exaggeration, or ridicule to expose "
+                "and criticize people's stupidity or vices, particularly in "
+                "the context of contemporary politics and other topical issues")
         satire = ['humor', 'irony']
         self.assertEquals(True, contains(satire, text))
