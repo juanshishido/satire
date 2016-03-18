@@ -4,6 +4,7 @@ from string import punctuation
 
 import numpy as np
 import pandas as pd
+from nltk.tokenize import RegexpTokenizer
 from sklearn.feature_extraction.text import CountVectorizer
 
 
@@ -46,3 +47,6 @@ def remove_punctuation(text):
 def contains(words, text):
     assert isinstance(words, (list, set)) and isinstance(text, str)
     return any(w in remove_punctuation(text).split() for w in words)
+
+def tokenizer():
+    return RegexpTokenizer("(?:[A-Za-z]\.)+|\w+(?:-\w+)*|\$[\d\.]+|\.\.\.|\S+")

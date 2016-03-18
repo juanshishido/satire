@@ -60,3 +60,11 @@ class TestUtils(unittest.TestCase):
                 "the context of contemporary politics and other topical issues")
         satire = ['humor', 'irony']
         self.assertEquals(True, contains(satire, text))
+
+    def test_tokenizer(self):
+        text = ("Good muffins cost $3.88 in New York. The U.S.A. has "
+                "state-of-the-art...breakfast.")
+        tokenized = ['Good', 'muffins', 'cost', '$3.88', 'in', 'New', 'York',
+                     '.', 'The', 'U.S.A.', 'has', 'state-of-the-art', '...',
+                     'breakfast', '.']
+        self.assertEquals(tokenized, tokenizer().tokenize(text))
