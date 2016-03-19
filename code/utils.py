@@ -36,7 +36,7 @@ def data(X, y):
 
 def vocabulary(a, b):
     assert isinstance(a, np.ndarray) and isinstance(b, np.ndarray)
-    cv = CountVectorizer()
+    cv = CountVectorizer(tokenizer=tokenizer().tokenize)
     cv.fit_transform(np.append(a, b))
     return list(cv.vocabulary_.keys())
 
