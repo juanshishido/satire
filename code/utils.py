@@ -22,6 +22,10 @@ def features(path):
         articles[file] = text
     return _to_df(articles)
 
+def parse_precomputed_features(path):
+    with open(path, 'r') as f:
+        return dict([ l.rstrip().split('\t') for l in f.readlines()])
+
 def labels(f):
     return pd.read_csv(f, header=None, sep=' ', names=['file', 'label'])
 
