@@ -34,15 +34,11 @@ def bns(text_array, y_true, tokenizer=None, vocabulary=None):
     Returns
     -------
     bns_features : np.ndarray
-        BNS values for each present feature
+        BNS weights for each present feature
     
     Notes
     -----
     Based on Forman, George (2003)
-
-    TODO
-    ----
-    Think about how to get these feature values for a test set
     """
     assert isinstance(text_array, np.ndarray) and isinstance(y_true, np.ndarray)
     X = _token_counts(text_array, tokenizer=tokenizer, vocabulary=vocabulary,
