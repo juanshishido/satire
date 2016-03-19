@@ -88,7 +88,7 @@ def represent(train, test, as_binary=True, tokenizer=None, vocabulary=None):
     return X_train, X_test
 
 def append_features(X, data, include='all', tokenizer=None):
-    assert include in ('lex', 'val', 'all'), 'Not a valid option'
+    assert include in ('lex', 'val', 'all', 'none'), 'Not a valid option'
     assert X.shape[0] == data.shape[0], 'Must have the same number of rows'
     X = X.copy()
     data = data.copy()
