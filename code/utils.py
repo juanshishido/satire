@@ -6,6 +6,7 @@ import numpy as np
 import pandas as pd
 from nltk.tokenize import RegexpTokenizer
 from scipy.sparse import csr_matrix, hstack
+from sklearn.grid_search import GridSearchCV
 from sklearn.feature_extraction.text import CountVectorizer
 
 from code.binormal_separation import bns
@@ -116,3 +117,8 @@ def append_features(X, data, include='all', tokenizer=None):
                     csr_matrix(data.validity.tolist()).T],
                    format='csr')
     return X
+
+def tune_params(X, y, clf, grid):
+    grid_search = GridSearchCV(clf, grid, cv=5, n_jobs=-1)
+    grid_search.fit(X, y)
+    return grid_search.best_params_
