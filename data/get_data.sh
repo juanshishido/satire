@@ -12,6 +12,14 @@ else
     rmdir satire
 fi
 
+if [[ -d 'oniondata/' ]]; then
+    echo "Onion Data has already been downloaded"
+else
+    wget http://www.eecs.berkeley.edu/~rsinha/dds/oniondata.tar.gz
+    tar xvzf oniondata.tar.gz
+    rm oniondata.tar.gz
+fi
+
 if test -a 'profane.txt'; then
     echo "The profanity list has already been downloaded"
 else
