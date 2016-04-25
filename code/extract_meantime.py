@@ -1,3 +1,4 @@
+#script to parse news articles (available at http://www.newsreader-project.eu/results/data/) in the NAF format
 #usage: python extract_meantime.py <input_path> <output_path>
 #example usage: python meantime meantime_data
 
@@ -18,7 +19,7 @@ output_path = sys.argv[2] + "/"
 inputs = [f for f in listdir(input_path) if isfile(join(input_path, f)) and ".naf" in f]
 for f in inputs:
     output_filename = f.split(".naf")[0] + ".txt"
-    content = open(input_path + "/" + f).read()
+    content = open(input_path + "/" + f, 'r').read()
     if ".bz2" in f:
         content = bz2.decompress(content)
     output_file = open(output_path + output_filename, 'w')
