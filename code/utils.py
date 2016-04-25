@@ -6,6 +6,7 @@ import numpy as np
 import pandas as pd
 from nltk.tokenize import RegexpTokenizer
 from scipy.sparse import csr_matrix, hstack
+from sklearn.decomposition import NMF
 from sklearn.grid_search import GridSearchCV
 from sklearn.feature_extraction.text import CountVectorizer
 
@@ -87,6 +88,14 @@ def represent(train, test, as_binary=True, tokenizer=None, vocabulary=None):
                      test.text.values, tokenizer,
                      vocabulary=vocabulary)
     return X_train, X_test
+
+def nmf(fit, transform):
+    model = NMF(n_components=5, random_state=42)
+    model.fit(fit)
+    H = model.transform(transform)
+    labels = np.argmax(H, axis=1)
+    nmf_dummies = pd.get_dummies(pd.Series(labels)).values
+    return nmf_dummies
 
 def append_features(X, data, include='all', tokenizer=None):
     assert include in ('lex', 'val', 'all', 'none'), 'Not a valid option'
