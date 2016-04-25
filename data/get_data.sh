@@ -12,6 +12,14 @@ else
     rmdir satire
 fi
 
+if [[ -d 'wikinews' ]]; then
+    echo "WikiNews Data has already been downloaded"
+else
+    wget http://www.eecs.berkeley.edu/~rsinha/dds/wikinews.tar
+    tar xvf wikinews.tar
+    rm wikinews.tar
+fi
+
 if [[ -d 'oniondata/' ]]; then
     echo "Onion Data has already been downloaded"
 else
