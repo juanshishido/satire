@@ -102,13 +102,11 @@ def represent(train, test, as_binary=True, tokenizer=None, vocabulary=None):
                      vocabulary=vocabulary)
     return X_train, X_test
 
-def features_lexical(X, data, tokenizer=None):
+def features_lexical(data, tokenizer=None):
     """Lexical features: profanity and slang
 
     Parameters
     ----------
-    X : scipy.sparse.csr.csr_matrix
-        Feature representation
     data : pd.DataFrame
         Training or testing data
     tokenizer : callable or None (default)
@@ -121,16 +119,17 @@ def features_lexical(X, data, tokenizer=None):
         binary representation for profanity
         proportion of slang tokens
     """
-    assert X.shape[0] == data.shape[0], 'Must have the same number of rows'
-    X, data = X.copy(), data.copy()
+    data = data.copy()
+    cv = CountVectorizer(tokenizer=tokenizer)
+    X = cv.fit_transform(data.text.values)
     profane = word_lists('data/profane.txt')
     data['profane'] = data.text.apply(lambda text: contains(profane, text))
     slang = word_lists('lists/slang.txt')
     cv = CountVectorizer(vocabulary=slang, tokenizer=tokenizer)
     slang_counts = cv.fit_transform(data.text.values)
+    slang_counts = np.divide(slang_counts.sum(axis=1), X.sum(axis=1))
     lexical = hstack([csr_matrix(data.profane.values).T,
-                      np.divide(slang_counts.sum(axis=1), X.sum(axis=1))],
-                     format='csr')
+                      csr_matrix(slang_counts)], format='csr')
     return lexical
 
 def features_validity(data):
@@ -172,6 +171,7 @@ def append_features(X, data, include='all', tokenizer=None):
         Either original `X` or with appended features
     """
     assert include in ('lex', 'val', 'all', 'none'), 'Not a valid option'
+    assert X.shape[0] == data.shape[0], 'Must have the same number of rows'
     # none
     if include == 'none':
         return X
