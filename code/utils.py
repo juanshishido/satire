@@ -177,7 +177,7 @@ def append_features(X, data, include='all', tokenizer=None):
         return X
     # features
     if include in ('lex', 'all'):
-        lexical = features_lexical(X, data, tokenizer)
+        lexical = features_lexical(data, tokenizer)
     if include in ('val', 'all'):
         validity = features_validity(data)
     # append
