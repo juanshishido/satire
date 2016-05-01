@@ -153,34 +153,41 @@ def features_validity(data):
     return validity
 
 def append_features(X, data, include='all', tokenizer=None):
+    """Append `include` features to `X`
+
+    Parameters
+    ----------
+    X : scipy.sparse.csr.csr_matrix
+        Feature representation
+    data : pd.DataFrame
+        Training or testing data
+    include : str
+        {'lex', 'val', 'all', none'}
+    tokenizer : callable or None (default)
+        For string tokenization
+
+    Returns
+    -------
+    X_ : scipy.sparse.csr.csr_matrix
+        Either original `X` or with appended features
+    """
     assert include in ('lex', 'val', 'all', 'none'), 'Not a valid option'
-    assert X.shape[0] == data.shape[0], 'Must have the same number of rows'
-    X = X.copy()
-    data = data.copy()
+    # none
+    if include == 'none':
+        return X
+    # features
     if include in ('lex', 'all'):
-        profane = word_lists('data/profane.txt')
-        data['profane'] = data.text.apply(lambda text: contains(profane, text))
-        slang = word_lists('lists/slang.txt')
-        cv = CountVectorizer(vocabulary=slang, tokenizer=tokenizer)
-        slang_counts = cv.fit_transform(data.text.values)
+        lexical = features_lexical(X, data, tokenizer)
     if include in ('val', 'all'):
-        semantic_validity = parse_precomputed_features('lists/semantic_validity.txt')
-        data['validity'] = data.file.apply(lambda file:
-                                           float(semantic_validity[file]))
+        validity = features_validity(data)
+    # append
     if include == 'lex':
-        X = hstack([X,
-                    csr_matrix(data.profane.tolist()).T,
-                    np.divide(slang_counts.sum(axis=1), X.sum(axis=1))],
-                   format='csr')
+        X_ = hstack([X, lexical], format='csr')
     elif include == 'val':
-        X = hstack([X, csr_matrix(data.validity.tolist()).T], format='csr')
+        X_ = hstack([X, validity], format='csr')
     elif include == 'all':
-        X = hstack([X,
-                    csr_matrix(data.profane.tolist()).T,
-                    np.divide(slang_counts.sum(axis=1), X.sum(axis=1)),
-                    csr_matrix(data.validity.tolist()).T],
-                   format='csr')
-    return X
+        X_ = hstack([X, lexical, validity], format='csr')
+    return X_
 
 def nmf(fit, transform):
     model = NMF(n_components=5, random_state=42)
