@@ -121,6 +121,7 @@ def features_lexical(X, data, tokenizer=None):
         binary representation for profanity
         proportion of slang tokens
     """
+    assert X.shape[0] == data.shape[0], 'Must have the same number of rows'
     X, data = X.copy(), data.copy()
     profane = word_lists('data/profane.txt')
     data['profane'] = data.text.apply(lambda text: contains(profane, text))
@@ -132,9 +133,24 @@ def features_lexical(X, data, tokenizer=None):
                      format='csr')
     return lexical
 
-def features_validity():
-    """Validity-based features"""
-    return NotImplemented
+def features_validity(data):
+    """Validity-based feature
+
+    Parameters
+    ----------
+    data : pd.DataFrame
+        Training or testing data
+
+    Returns
+    -------
+    validity : scipy.sparse.csr.csr_matrix
+        shape (n_samples, 1)
+    """
+    data = data.copy()
+    semantic_validity = parse_precomputed_features('lists/semantic_validity.txt')
+    data['validity'] = data.file.apply(lambda file: float(semantic_validity[file]))
+    validity = csr_matrix(data.validity.values).T
+    return validity
 
 def append_features(X, data, include='all', tokenizer=None):
     assert include in ('lex', 'val', 'all', 'none'), 'Not a valid option'
