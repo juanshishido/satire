@@ -128,8 +128,11 @@ def features_lexical(data, tokenizer=None):
     cv = CountVectorizer(vocabulary=slang, tokenizer=tokenizer)
     slang_counts = cv.fit_transform(data.text.values)
     slang_counts = np.divide(slang_counts.sum(axis=1), X.sum(axis=1))
+    highi = slang_counts > slang_counts.mean() + 2 * slang_counts.std()
+    lowi = slang_counts < slang_counts.mean() - 2 * slang_counts.std()
     lexical = hstack([csr_matrix(data.profane.values).T,
-                      csr_matrix(slang_counts)], format='csr')
+                      csr_matrix(slang_counts),
+                      csr_matrix(highi), cst_matrix(lowi)], format='csr')
     return lexical
 
 def features_validity(data):
