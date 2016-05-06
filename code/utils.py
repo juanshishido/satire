@@ -132,7 +132,7 @@ def features_lexical(data, tokenizer=None):
     lowi = slang_counts < slang_counts.mean() - 2 * slang_counts.std()
     lexical = hstack([csr_matrix(data.profane.values).T,
                       csr_matrix(slang_counts),
-                      csr_matrix(highi), cst_matrix(lowi)], format='csr')
+                      csr_matrix(highi), csr_matrix(lowi)], format='csr')
     return lexical
 
 def features_validity(data):
